@@ -2,3 +2,9 @@
 # defaults file
 ad_homedir: '/home/local/UNIMAAS/%U'
 ad_shell: '/bin/bash'
+
+# Set allowed groups and users, by default no one is allowed
+ad_allowed_security_groups:
+  - m4i-nanoscopy-workstations
+
+# ad_allowed_users:

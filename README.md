@@ -21,11 +21,12 @@ This Ansible role set and installs a number of things:
 
 ## Variables to set
 Set these variables in your inventory or in defaults/main.yml
-* `domain_user:` and `domain_pass:` of a domain user with rights to join computers to the domain
 
+* `domain_user:` and `domain_pass:` of a domain user with rights to join computers to the domain
 * `ad_homedir:` Linux home directory to be used and created for domain users
 * `ad_shell:` Login shell to be used for domain users
-* `require_membership_of:` Users are required to be member of this security group before they can login 
+* `ad_allowed_security_groups:` Security groups that are allowed access (by default no one is allowed)
+* `ad_allowed_security_users:` Users that are allowed access (by default no one is allowed)
 
 ## Supported platforms
 * Ubuntu 16.04

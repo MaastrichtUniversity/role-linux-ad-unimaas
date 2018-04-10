@@ -54,7 +54,8 @@
       insertafter: EOF
       marker: "# {mark} ANSIBLE MANAGED USERS"
       block: |
-          simple_allow_groups = {{ ad_allowed_security_groups|default('$') }}
-          simple_allow_user = {{ ad_allowed_users|default('$') }}
+          simple_allow_groups = {{ ad_allowed_security_groups| default(['$'])| join(',') }}
+          simple_allow_user = {{ ad_allowed_users| default(['$'])| join(',') }}
+          simple_deny_users = $
     notify: restart sssd
 
