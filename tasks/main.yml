@@ -20,15 +20,16 @@
   - name: Check the domain status
     shell: /bin/bash -c "realm list | grep sssd"
     register: realmd_bound
+    failed_when: realmd_bound.rc == 2
+    check_mode: no
     changed_when: false
-    ignore_errors: true
 
-  - name: Join the machine if it is not already on the domain.
+  - name: Join the UNIMAAS domain
     expect:
       command: /usr/sbin/realm -v join -U {{ ad_user }} UNIMAAS.NL
       responses:
-        Password for *: "{{ ad_user_password }}"
-    when: realmd_bound|failed
+        Password for *: "{{ ad_user_pass }}"
+    when: realmd_bound.rc == 1
 
   # This is done after joining the machine, as this will initially prepare sssd.conf
   - name: Place UID mapping in SSSD config file

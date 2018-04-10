@@ -9,3 +9,5 @@
   - krb5-user
   - samba-common
   - samba-dsdb-modules
+  # This is required for the ansible module epect to do the password login for realm
+  - python-pexpect

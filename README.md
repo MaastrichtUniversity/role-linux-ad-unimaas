@@ -10,7 +10,7 @@ This Ansible role set and installs a number of things:
 
 * Setup time synchronisation with AD domain controller using timesyncd (systemd replacement of ntpd)
 * Install realmd, SSSD, SSSD-AD and Kerberos5 (krb5)
-* Authenticate as domain user (using krb5) to join the computer to domain
+* Authenticate as domain user (using krb5) to join (using adcli) the computer to domain
 * Setup SSSD to perform authentication against AD. Uses special UID mappings.
 * Changes PAM to use SSSD authentication method
 
@@ -22,7 +22,7 @@ This Ansible role set and installs a number of things:
 ## Variables to set
 Set these variables in your inventory or in defaults/main.yml
 
-* `domain_user:` and `domain_pass:` of a domain user with rights to join computers to the domain
+* `ad_user:` and `ad_user_pass:` of a domain user with rights to join computers to the domain
 * `ad_homedir:` Linux home directory to be used and created for domain users
 * `ad_shell:` Login shell to be used for domain users
 * `ad_allowed_security_groups:` Security groups that are allowed access (by default no one is allowed)
