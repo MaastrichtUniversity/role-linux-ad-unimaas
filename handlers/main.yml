@@ -3,3 +3,8 @@
   service:
     name: sssd
     state: restarted
+
+- name: restart timesyncd
+  service:
+    name: systemd-timesyncd
+    state: restarted
