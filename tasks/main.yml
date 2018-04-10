@@ -1,0 +1,15 @@
+---
+# Main tasks file
+  - include_tasks: ubuntu.yml
+    when: ansible_os_family == 'Debian'
+
+  - name: Check the Domain status
+    shell: /bin/bash -c "realm list | grep sssd"
+    register: realmd_bound
+    changed_when: false
+    ignore_errors: true
+
+  - name: Join the machine if it is not already on the domain.
+    command: /usr/sbin/realm join {{ domain_fqdn }} {{ domain_user }} {{ domain_pass }}
+    when: realmd_bound|failed
+  

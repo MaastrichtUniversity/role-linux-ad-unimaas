@@ -1,0 +1,10 @@
+---
+# tasks file for installing SSSD on Ubuntu
+- name: linux-ad-unimaas | Ubuntu  | installing packages
+  apt: name={{item}} state=present
+  with_items:
+  - realmd
+  - sssd
+  - sssd-ad
+  - krb5-user
+  - samba-dsdb-modules
