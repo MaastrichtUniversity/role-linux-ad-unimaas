@@ -1,16 +1,16 @@
 # Ansible role-linux-ad-unimaas
-====================
 
 https://github.com/MaastrichtUniversity/role-linux-ad-unimaas
 
-Ansible role for deploying SSSD for Active Directory login at UNIMAAS
+Ansible role for deploying SSSD for Active Directory login at UNIMAAS. Feel free to fork this repository and change to 
+your own needs. We recommend to keep the UID mappings defined in sssd.conf the same, to have universal UIDs accross UNIMAAS.
 
 ## How it works
 This Ansible role set and installs a number of things:
 
 * Setup time synchronisation with AD domain controller using timesyncd (systemd replacement of ntpd)
-* Install realmd, SSSD, SSSD-AD and Kerberos5 (k5)
-* Authenticate as domain user (using k5) to join the computer to domain
+* Install realmd, SSSD, SSSD-AD and Kerberos5 (krb5)
+* Authenticate as domain user (using krb5) to join the computer to domain
 * Setup SSSD to perform authentication against AD. Uses special UID mappings.
 * Changes PAM to use SSSD authentication method
 
@@ -23,8 +23,8 @@ This Ansible role set and installs a number of things:
 Set these variables in your inventory or in defaults/main.yml
 * `domain_user:` and `domain_pass:` of a domain user with rights to join computers to the domain
 
-* `homedir_template:` Linux home directory to be used and created for domain users
-* `login_shell:` Login shell to be used for domain users
+* `ad_homedir:` Linux home directory to be used and created for domain users
+* `ad_shell:` Login shell to be used for domain users
 * `require_membership_of:` Users are required to be member of this security group before they can login 
 
 ## Supported platforms
@@ -32,3 +32,4 @@ Set these variables in your inventory or in defaults/main.yml
 
 ## TODO
 * Support for Redhat/CentOS
+* sudo access via security group

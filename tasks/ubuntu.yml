@@ -7,4 +7,5 @@
   - sssd
   - sssd-ad
   - krb5-user
+  - samba-common
   - samba-dsdb-modules

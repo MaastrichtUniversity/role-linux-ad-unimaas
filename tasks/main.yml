@@ -3,13 +3,58 @@
   - include_tasks: ubuntu.yml
     when: ansible_os_family == 'Debian'
 
-  - name: Check the Domain status
+  - name: Template realmd config file
+    template: >
+      src=realmd.j2
+      dest=/etc/realmd.conf
+      owner=root
+      group=root
+      mode=0644
+
+  - name: Place krb5 config file
+    copy:
+      src: "{{ role_path }}/files/krb5.conf"
+      dest: /etc/krb5.conf
+      mode: 0644
+
+  - name: Check the domain status
     shell: /bin/bash -c "realm list | grep sssd"
     register: realmd_bound
     changed_when: false
     ignore_errors: true
 
   - name: Join the machine if it is not already on the domain.
-    command: /usr/sbin/realm join {{ domain_fqdn }} {{ domain_user }} {{ domain_pass }}
+    expect:
+      command: /usr/sbin/realm -v join -U {{ ad_user }} UNIMAAS.NL
+      responses:
+        Password for *: "{{ ad_user_password }}"
     when: realmd_bound|failed
-  
+
+  # This is done after joining the machine, as this will initially prepare sssd.conf
+  - name: Place UID mapping in SSSD config file
+    blockinfile:
+      path: /etc/sssd/sssd.conf
+      insertafter: access_provider = simple
+      marker: "# {mark} ANSIBLE MANAGED UID MAPPING"
+      block: |
+        ldap_schema = ad
+        ldap_idmap_default_domain = UNIMAAS.NL
+        ldap_idmap_range_min = 1000000
+        ldap_idmap_range_size = 5000000
+        ldap_id_range_max = 6000000
+        ldap_idmap_default_domain_sid = S-1-5-21-1572361299-1184395705-1606240830
+        ldap_idmap_autorid_compat = True
+        ldap_referrals = false
+        ignore_group_members = True
+    notify: restart sssd
+
+  - name: Place required security groups in SSSD config file
+    blockinfile:
+      path: /etc/sssd/sssd.conf
+      insertafter: EOF
+      marker: "# {mark} ANSIBLE MANAGED USERS"
+      block: |
+          simple_allow_groups = {{ ad_allowed_security_groups|default('$') }}
+          simple_allow_user = {{ ad_allowed_users|default('$') }}
+    notify: restart sssd
+

@@ -1,2 +1,4 @@
 ---
 # defaults file
+ad_homedir: '/home/local/UNIMAAS/%U'
+ad_shell: '/bin/bash'
