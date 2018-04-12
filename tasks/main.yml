@@ -42,7 +42,7 @@
   - name: Place UID mapping in SSSD config file
     blockinfile:
       path: /etc/sssd/sssd.conf
-      insertafter: access_provider = simple
+      insertafter: EOF
       marker: "# {mark} ANSIBLE MANAGED UID MAPPING"
       block: |
         ldap_schema = ad
@@ -62,6 +62,7 @@
       insertafter: EOF
       marker: "# {mark} ANSIBLE MANAGED USERS"
       block: |
+          access_provider = simple
           simple_allow_groups = {{ ad_allowed_security_groups| default(['$'])| join(',') }}
           simple_allow_user = {{ ad_allowed_users| default(['$'])| join(',') }}
           simple_deny_users = $

@@ -18,6 +18,7 @@ This Ansible role set and installs a number of things:
 
 * Pre-register the computer-name in the AD
 * Change hostname to computer-name in `/etc/hostname` and `/etc/hosts`
+* Add this Ansible role to your playbook and run your playbook
 
 ## Variables to set
 Set these variables in your inventory or in defaults/main.yml
@@ -34,3 +35,4 @@ Set these variables in your inventory or in defaults/main.yml
 ## TODO
 * Support for Redhat/CentOS
 * sudo access via security group
+* support for setting pam_mkhomedir
