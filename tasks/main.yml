@@ -64,7 +64,7 @@
       block: |
           access_provider = simple
           simple_allow_groups = {{ ad_allowed_security_groups| default(['$'])| join(',') }}
-          simple_allow_user = {{ ad_allowed_users| default(['$'])| join(',') }}
+          simple_allow_users = {{ ad_allowed_users| default(['$'])| join(',') }}
           simple_deny_users = $
     notify: restart sssd
 
