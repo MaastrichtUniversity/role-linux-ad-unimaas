@@ -3,12 +3,15 @@
   - include_tasks: ubuntu.yml
     when: ansible_os_family == 'Debian'
 
-  - name: Set time sync to unimaas.nl via timesyncd
-    lineinfile:
-      path: /etc/systemd/timesyncd.conf
-      insertafter: EOF
-      line: 'NTP=unimaas.nl'
-    notify: restart timesyncd
+  - name: Ensure NTP is set to ntp.unimaas.nl
+      ini_file:
+        path: /etc/systemd/timesyncd.conf
+        section: Time
+        option: NTP
+        value: ntp.unimaas.nl
+        mode: 0644
+        backup: no
+      notify: restart timesyncd
 
   - name: Template realmd config file
     template: >
