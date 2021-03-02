@@ -3,7 +3,7 @@
 https://github.com/MaastrichtUniversity/role-linux-ad-unimaas
 
 Ansible role for deploying SSSD for Active Directory login at UNIMAAS. Feel free to fork this repository and change to 
-your own needs. We recommend to keep the UID mappings defined in sssd.conf the same, to have universal UIDs accross UNIMAAS.
+your own needs. We recommend keeping the UID mappings defined in sssd.conf the same, to have universal UIDs across UNIMAAS.
 
 ## How it works
 This Ansible role set and installs a number of things:
@@ -30,7 +30,7 @@ Set these variables in your inventory or in defaults/main.yml
 * `ad_allowed_security_users:` Users that are allowed access (by default no one is allowed)
 
 ## Supported platforms
-* Ubuntu 16.04
+* Ubuntu 16.04, 18.04 and 20.04
 
 ## TODO
 * Support for Redhat/CentOS
