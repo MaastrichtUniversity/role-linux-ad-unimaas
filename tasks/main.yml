@@ -49,7 +49,7 @@
         ldap_idmap_default_domain = UNIMAAS.NL
         ldap_idmap_range_min = 1000000
         ldap_idmap_range_size = 5000000
-        ldap_id_range_max = 6000000
+        ldap_idmap_range_max = 6000000
         ldap_idmap_default_domain_sid = S-1-5-21-1572361299-1184395705-1606240830
         ldap_idmap_autorid_compat = True
         ldap_referrals = false
